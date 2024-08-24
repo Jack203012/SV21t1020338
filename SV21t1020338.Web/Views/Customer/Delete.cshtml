@@ -1,0 +1,66 @@
+﻿@model SV21t1020338.DomainModels.Customer
+@{
+    ViewBag.Title = "Xoa Khach Hang";
+}
+
+<div class="box box-danger">
+    <div class="box-body">
+        <form action="~/Customer/Delete/@Model.CustomerId" method="post" >
+
+            <div class="form-group">
+                <label>Tên khách hàng</label>
+                <p class="form-control-static">@Model.CustomerName</p>
+            </div>
+
+            <div class="form-group">
+                <label>Tên giao dịch</label>
+                <p class="form-control-static">@Model.ContactName</p>
+            </div>
+
+            <div class="form-group">
+                <label>Điện thoại</label>
+                <p class="form-control-static">@Model.Phone</p>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <p class="form-control-static">@Model.Email</p>
+            </div>
+
+            <div class="form-group">
+                <label>Địa Chỉ</label>
+                <p class="form-control-static">@Model.Address</p>
+            </div>
+
+            <div class="form-group">
+                <label>Tỉnh Thành</label>
+                <p class="form-control-static">@Model.Province</p>
+            </div>
+
+            <div class="form-group">
+                <label>Trạng Thái</label>
+                <p class="form-control-static" > @(Model.IsLocked ? "Khách hàng bị khoá" : "Khách hàng không bị khoá")</p>
+            </div>
+            <div class="form-group text-right">
+                @if(ViewBag.AllowDelete)
+                {
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fa fa-trash"></i>
+                        Xoá Dữ Liệu
+                    </button>
+                }
+                else
+                {
+                    <span style="color:red">Không được xoá khách hàng này!!!</span>
+                }
+
+                <a href="~/Customer" class="btn btn-default">
+                    Quay Lại
+                </a>
+            </div>
+
+
+            
+        </form>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+﻿@model SV21t1020338.DomainModels.Shipper
+@{
+    ViewBag.Title = "Xoa Đơn Vị Vận Chuyển";
+}
+
+<div class="box box-danger">
+    <div class="box-body">
+        <form action="~/Shipper/Delete/@Model.ShipperID" method="post">
+
+            <div class="form-group">
+                <label>Tên Đơn Vị Vận Chuyển</label>
+                <p class="form-control-static">@Model.ShipperName</p>
+            </div>
+
+            <div class="form-group">
+                <label>Điện Thoại</label>
+                <p class="form-control-static">@Model.Phone</p>
+            </div>
+
+            <div class="form-group text-right">
+                <button type="submit" class="btn btn-danger">
+                    <i class="fa fa-trash"></i>
+                    Xoá dữ liệu
+                </button>
+                <a href="~/Shipper" class="btn btn-default">
+                    Quay lại
+                </a>
+            </div>
+
+
+            
+        </form>
+    </div>
+</div>

@@ -1,0 +1,109 @@
+﻿ @model ProductSearchInput
+ @{
+   
+    ViewBag.Title = "Quản lý mặt hàng";
+
+}
+<div class="box box-primary">
+    <div class="box-body">
+        <!-- Tìm kiếm dữ liệu -->
+        <form id="formSearch" action="~/Product/Search" method="get" data-container="#searchResult">
+            <div class="input-group">
+                <input type="hidden" name="@nameof(Model.PageSize)" value="@Model.PageSize" />
+                <div class="col-sm-3">
+                    <label>Loại hàng:</label>
+                    <select class="form-control" name="@nameof(Model.CategoryId)">
+                        <option  value="">-- Chọn loại hàng --</option>
+                        @foreach (var category in CommonDataService.ListOfCategories())
+                        {
+                            if (Model.CategoryId == category.CategoryID)
+                            {
+                                <option  value="@category.CategoryID" selected>@category.CategoryName</option>
+                            }
+                            else
+                            {
+                                <option value="@category.CategoryID">@category.CategoryName</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <label>Nhà cung cấp:</label>
+                    <select class="form-control" name="@nameof(Model.SupplierId)">
+                        <option value="">-- Chọn nhà cung cấp --</option>
+                        @foreach (var supplier in CommonDataService.ListOfSuppliers())
+                        {
+                            if (Model.SupplierId == supplier.SupplierID)
+                            {
+                                <option  value="@supplier.SupplierID" name="" selected>@supplier.SupplierName</option>
+                            }
+                            else
+                            {
+                                <option  value="@supplier.SupplierID">@supplier.SupplierName</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-sm-1">
+                    <label>Giá từ:</label>
+                    <input type="text" class="form-control" name="@nameof(Model.MinPrice)" value="@Model.MinPrice">
+                </div>
+                <div class="col-sm-1">
+                    <label>đến:</label>
+                    <input type="text" class="form-control" name="@nameof(Model.MaxPrice)" value="@Model.MaxPrice">
+                </div>
+                <div class="col-sm-4">
+                    <label>Tên mặt hàng cần tìm:</label>
+                    <div class="input-group">
+                        <input name="@nameof(Model.SearchValue)" type="text" class="form-control" placeholder="Nhập mặt hàng hàng cần tìm" value="@Model.SearchValue" autofocus>
+                        <div class="input-group-btn">
+                            <button class="btn btn-info" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                            <a href="/Product/Create" class="btn btn-primary" style="margin-left:5px">
+                                <i class="fa fa-plus"></i> Bổ sung
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form><br>
+        <!-- Hiển thị dữ liệu -->
+        <div id="searchResult">
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#formSearch").submit(function (e) {
+                e.preventDefault();
+                paginationSearch(this, 1);
+                return;
+            });
+            paginationSearch("#formSearch", @Model.Page);
+        });
+
+        function paginationSearch(formSearch, page) {
+            var action = $(formSearch).prop("action");
+            var method = $(formSearch).prop("method");
+            var container = $(formSearch).data("container");
+
+            var searchData = $(formSearch).serializeArray();
+            searchData.push({ "name": "Page", "value": page });
+
+            $.ajax({
+                url: action,
+                type: method,
+                data: searchData,
+                async: false,
+                error: function () {
+                    alert("Your request is not valid!");
+                },
+                success: function (data) {
+                    $(container).html(data);
+                }
+            });
+        }
+    </script>
+}

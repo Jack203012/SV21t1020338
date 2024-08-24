@@ -1,0 +1,81 @@
+﻿@model Product
+
+<div class="box box-danger">
+    <div class="box-body">
+        <form class="form-horizontal" method="post" enctype="multipart/form-data" action="~/Product/Delete/@Model.ProductID">
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Ảnh mặt hàng:</label>
+                <div class="col-lg-offset-2 col-sm-10">
+                    <img id="Photo" src="~/images/Products/@Model.Photo" class="img img-bordered" style="width:200px; height:200px" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Tên Mặt Hàng:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">@Model.ProductName</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Chi tiết mặt hàng:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">@Model.ProductDescription</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">Nhà cung cấp:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">@(CommonDataService.GetSupplier(Model.SupplierID)?.SupplierName ?? "")</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">Loại hàng:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">@(CommonDataService.GetCategory(Model.CategoryID)?.CategoryName ?? "")</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">Đơn vị tính:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">@Model.Unit</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">Giá mặt hàng:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">@Model.Price</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">Trạng thái:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static"> @(Model.IsSelling ? "Hiện đang được bán" : "Hàng đã ngừng bán") </p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-sm-20">
+                    @if (ViewBag.AllowDelete)
+                    {
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fa fa-trash"></i>
+                            Xoá Mặt Hàng
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-danger" disabled>
+                            Không Thể Xoá Mặt Hàng Này
+                        </button>
+                    }
+                    <a href="~/Product" class="btn btn-default">
+                        Quay lại
+                    </a>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
